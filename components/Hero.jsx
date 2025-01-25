@@ -5,7 +5,7 @@ import About from "./About";
 import Features from "./Features";
 import Pricing from "./Pricing";
 import Contact from "./ContactUs";
-import FAQ from "./FAQ";
+import FAQ from "./Faq";
 import Footer from "./Footer";
 export default function Home() {
   return (

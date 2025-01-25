@@ -1,4 +1,8 @@
+import { userInfo } from "os";
 import React, { useState } from "react";
+import { data } from "react-router-dom";
+import axios from "axios";
+import { access } from "fs";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +14,8 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [otpDialogOpen, setOtpDialogOpen] = useState(false);
   const [otp, setOtp] = useState("");
+  const [encryptedOpt, setEncryptedOtp] = useState({});
+  const [userId, setUserId] = useState({});
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -39,7 +45,7 @@ const SignUp = () => {
 
     try {
       const response = await fetch(
-        "https://api.test.hellodigisir.in/api/auth/tempLogin/register",
+        "http://localhost:8000/api/auth/tempLogin/register",
         {
           method: "POST",
           headers: {
@@ -49,12 +55,22 @@ const SignUp = () => {
         }
       );
 
-      const data = await response.json();
+      const resData = await response.json();
+      // console.log(response);
+      // console.log(resData.otp);
+      // console.log(resData.userId);
+
+      // setEncryptedOtp(resData)
+      // setUserId(resData.userId)
+      // console.log(encryptedOpt);
+      // console.log(userId);
 
       if (response.ok) {
+        setEncryptedOtp(resData.otp);
+        setUserId(resData.userId);
         setOtpDialogOpen(true); // Open OTP dialog
       } else {
-        setError(data.message || "Something went wrong. Please try again.");
+        setError(resData.message || "Something went wrong. Please try again.");
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
@@ -75,27 +91,28 @@ const SignUp = () => {
     setError("");
     setLoading(true);
     console.log(otp);
+    console.log(encryptedOpt);
+    console.log(userId);
+
     try {
-      const response = await fetch(
-        "https://api.test.hellodigisir.in/api/auth/tempLogin/verify",
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/tempLogin/verify",
+        { userotp: otp, encryptedOtp: encryptedOpt, userId },
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userotp: otp }),
         }
       );
 
-      const data = await response.json();
-      console.log(data);
+      console.log(response);
 
-      if (response.ok) {
+      if (response.status === 200) {
         alert("OTP verified successfully! Welcome to DigiSir.");
         setOtpDialogOpen(false); // Close OTP dialog
         setFormData({ name: "", email: "", password: "" }); // Clear form
       } else {
-        setError(data.message || "Invalid OTP. Please try again.");
+        setError(response.data.message || "Invalid OTP. Please try again.");
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
