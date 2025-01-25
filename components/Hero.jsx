@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Play, Apple } from "lucide-react";
 import Navbar from "./Navbar";
 import About from "./About";
@@ -7,6 +7,7 @@ import Pricing from "./Pricing";
 import Contact from "./ContactUs";
 import FAQ from "./Faq";
 import Footer from "./Footer";
+import axios from "axios";
 export default function Home() {
   return (
     <>

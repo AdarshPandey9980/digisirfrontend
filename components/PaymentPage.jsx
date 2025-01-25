@@ -27,6 +27,8 @@ const PaymentPage = () => {
       const { data: order } = await axios.post("http://localhost:8000/api/payment/create-order", {
         amount: price,
         currency: "INR",
+        name:"Mithilesh",
+        email:"youremail@example.com"
       });
 
       const options = {
@@ -41,7 +43,7 @@ const PaymentPage = () => {
           const { data } = await axios.post("http://localhost:8000/api/payment/verify-payment", {
             order_id: response.razorpay_order_id,
             payment_id: response.razorpay_payment_id,
-            signature: response.razorpay_signature,
+            signature: response.razorpay_signature
           });
           console.log(response.razorpay_payment_id)
 
