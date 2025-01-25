@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 
 const SignIn = () => {
+  const navigate = useNavigate(); // Hook for navigation
+
   // State to manage form fields and errors
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +20,7 @@ const SignIn = () => {
     // Simple validation
     if (!email || !password) {
       setError("Please fill in both fields.");
+      toast.error("Please fill in both fields."); // Show toast error
       return;
     }
 
@@ -21,26 +28,34 @@ const SignIn = () => {
     setLoading(true); // Show loading state
 
     try {
-      // Simulate API request (replace with actual API endpoint)
-      const response = await fetch("https://example.com/api/sign-in", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      // Send login request to API
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/tempLogin/login",
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      const data = await response.json();
+      if (response.status === 200) {
+        // Store user details in localStorage (or sessionStorage)
+        localStorage.setItem("user", JSON.stringify(response.data.user)); // Assuming response.data.user has user details
 
-      if (response.ok) {
-        alert("Login successful!"); // Handle successful login
-        // Redirect logic (if required)
-        // window.location.href = "/dashboard";
-      } else {
-        setError(data.error || "Invalid email or password.");
+        toast.success("Login successful!"); // Show toast success
+
+        // Redirect to home page with user details
+        navigate("/"); // Assuming /home is the home route
       }
     } catch (err) {
-      setError("An error occurred. Please try again later.");
+      if (err.response) {
+        setError(err.response.data.error || "Invalid email or password.");
+        toast.error(err.response.data.error || "Invalid email or password."); // Show toast error
+      } else {
+        setError("An error occurred. Please try again later.");
+        toast.error("An error occurred. Please try again later."); // Show toast error
+      }
     } finally {
       setLoading(false); // Hide loading state after request
     }
@@ -108,6 +123,9 @@ const SignIn = () => {
           </a>
         </p>
       </div>
+
+      {/* Toast container to display the toast notifications */}
+      <ToastContainer />
     </section>
   );
 };

@@ -1,8 +1,8 @@
-import { userInfo } from "os";
 import React, { useState } from "react";
-import { data } from "react-router-dom";
 import axios from "axios";
-import { access } from "fs";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import the Toastify styles
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -14,8 +14,9 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [otpDialogOpen, setOtpDialogOpen] = useState(false);
   const [otp, setOtp] = useState("");
-  const [encryptedOpt, setEncryptedOtp] = useState({});
+  const [encryptedOtp, setEncryptedOtp] = useState({});
   const [userId, setUserId] = useState({});
+  const navigate = useNavigate();
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -31,7 +32,7 @@ const SignUp = () => {
     setOtp(e.target.value);
   };
 
-  // Handle form submission for sign-up
+  // Handle form submission for sign-up using axios
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,42 +45,36 @@ const SignUp = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         "http://localhost:8000/api/auth/tempLogin/register",
+        formData,
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
         }
       );
 
-      const resData = await response.json();
-      // console.log(response);
-      // console.log(resData.otp);
-      // console.log(resData.userId);
+      const resData = response.data;
 
-      // setEncryptedOtp(resData)
-      // setUserId(resData.userId)
-      // console.log(encryptedOpt);
-      // console.log(userId);
-
-      if (response.ok) {
+      if (response.status === 200) {
         setEncryptedOtp(resData.otp);
         setUserId(resData.userId);
         setOtpDialogOpen(true); // Open OTP dialog
+        toast.success("OTP sent! Please verify.");
       } else {
         setError(resData.message || "Something went wrong. Please try again.");
+        toast.error(resData.message || "Something went wrong. Please try again.");
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
+      toast.error("An error occurred. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle OTP verification
+  // Handle OTP verification using axios
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
 
@@ -90,14 +85,11 @@ const SignUp = () => {
 
     setError("");
     setLoading(true);
-    console.log(otp);
-    console.log(encryptedOpt);
-    console.log(userId);
 
     try {
       const response = await axios.post(
         "http://localhost:8000/api/auth/tempLogin/verify",
-        { userotp: otp, encryptedOtp: encryptedOpt, userId },
+        { userotp: otp, encryptedOtp, userId },
         {
           headers: {
             "Content-Type": "application/json",
@@ -105,17 +97,18 @@ const SignUp = () => {
         }
       );
 
-      console.log(response);
-
       if (response.status === 200) {
-        alert("OTP verified successfully! Welcome to DigiSir.");
+        toast.success("OTP verified successfully! Welcome to DigiSir.");
+        navigate('/sign-in')
         setOtpDialogOpen(false); // Close OTP dialog
         setFormData({ name: "", email: "", password: "" }); // Clear form
       } else {
         setError(response.data.message || "Invalid OTP. Please try again.");
+        toast.error(response.data.message || "Invalid OTP. Please try again.");
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
+      toast.error("An error occurred. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -223,6 +216,9 @@ const SignUp = () => {
           </div>
         )}
       </div>
+
+      {/* Toast container */}
+      <ToastContainer />
     </section>
   );
 };

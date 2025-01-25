@@ -32,12 +32,10 @@ export default function Home() {
 
             <div className="flex items-center gap-4">
               <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg hover:bg-slate-800 transition-colors">
-                <Play size={20} />
-                <span>Play Store</span>
+                <span>Join a Class</span>
               </button>
               <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg hover:bg-slate-800 transition-colors">
-                <Apple size={20} />
-                <span>App Store</span>
+                <span>Create a Class</span>
               </button>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Check } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const plans = [
   {
@@ -39,6 +40,12 @@ const plans = [
 ];
 
 const PricingSection = () => {
+  const navigate = useNavigate();  // Initialize navigate hook
+
+  const handleChoosePlan = (price) => {
+    navigate("/payment", { state: { price } });  // Pass the price via state
+  };
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50" id="pricing">
       <div className="container mx-auto px-4">
@@ -61,8 +68,8 @@ const PricingSection = () => {
                 <p className="text-gray-600">{plan.description}</p>
               </div>
               <div className="flex-grow">
+                <span className="text-4xl font-bold text-[#002B5B]">₹{plan.price}</span>
                 <div className="mb-6">
-                  <span className="text-4xl font-bold text-[#002B5B]">${plan.price}</span>
                   <span className="text-gray-600 ml-2">{plan.duration}</span>
                 </div>
                 <ul className="space-y-2">
@@ -75,8 +82,11 @@ const PricingSection = () => {
                 </ul>
               </div>
               <div className="mt-4">
-                <button className="w-full bg-[#002B5B] hover:bg-blue-700 text-white py-2 rounded-lg transition-colors">
-                  <a href="/payment"></a>
+                <button
+                  onClick={() => handleChoosePlan(plan.price)}  // Pass the price of the selected plan
+                  className="w-full bg-[#002B5B] hover:bg-blue-700 text-white py-2 rounded-lg transition-colors"
+                >
+                  Choose a plan
                 </button>
               </div>
             </div>
