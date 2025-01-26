@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Play, Apple } from "lucide-react";
 import Navbar from "./Navbar";
 import About from "./About";
 import Features from "./Features";
@@ -8,7 +7,29 @@ import Contact from "./ContactUs";
 import FAQ from "./Faq";
 import Footer from "./Footer";
 import axios from "axios";
+import Cookies from "js-cookie";
 export default function Home() {
+
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/auth/tempLogin/getCurrentUser', {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        } 
+      });
+
+      const userData = response.data.user;
+      console.log("User Data:", userData);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect( () => {
+   fetchUser();
+  }, []);
+
   return (
     <>
     <Navbar />

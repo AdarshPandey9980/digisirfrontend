@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
+import Cookies from "js-cookie";
 
 const SignIn = () => {
   const navigate = useNavigate(); // Hook for navigation
@@ -40,8 +41,14 @@ const SignIn = () => {
       );
 
       if (response.status === 200) {
+
+        console.log(response.data);
+
+        const token = response.data?.userToken;
+        Cookies.set("userToken", token, { expires: 1 });
+        
         // Store user details in localStorage (or sessionStorage)
-        localStorage.setItem("user", JSON.stringify(response.data.user)); // Assuming response.data.user has user details
+        // localStorage.setItem("user", JSON.stringify(response.data.user)); // Assuming response.data.user has user details
 
         toast.success("Login successful!"); // Show toast success
 
