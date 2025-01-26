@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import About from "./About";
 import Features from "./Features";
@@ -9,17 +9,23 @@ import Footer from "./Footer";
 import axios from "axios";
 import Cookies from "js-cookie";
 export default function Home() {
+  const [email,setEmail] = useState("")
+  const [name,setName] = useState("")
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/auth/tempLogin/getCurrentUser', {
-        withCredentials: true,
+      const userId = Cookies.get("userId");
+      const response = await axios.post('http://localhost:8000/api/auth/tempLogin/getCurrentUser',{userId}, {
         headers: {
           "Content-Type": "application/json",
         } 
       });
 
       const userData = response.data.user;
+      if (userData) {
+        setEmail(userData.email);
+        setName(userData.name);
+      }
       console.log("User Data:", userData);
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -28,11 +34,11 @@ export default function Home() {
 
   useEffect( () => {
    fetchUser();
-  }, []);
+  });
 
   return (
     <>
-    <Navbar />
+    <Navbar email={email} name={name}/>
     <section id="home">
       <main className="mt-18 bg-[#002B5B]">
         {/* Hero Section */}
@@ -76,7 +82,7 @@ export default function Home() {
     </section>
     <About/>
     <Features/>
-    <Pricing/>
+    <Pricing name={name} email={email}/>
     <FAQ/>
     <Contact/>
     <Footer/>

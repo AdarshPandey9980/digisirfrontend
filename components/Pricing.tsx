@@ -39,11 +39,17 @@ const plans = [
   },
 ];
 
-const PricingSection = () => {
+const PricingSection = ({name = "",email = ""}) => {
   const navigate = useNavigate();  // Initialize navigate hook
 
   const handleChoosePlan = (price) => {
-    navigate("/payment", { state: { price } });  // Pass the price via state
+    if (name === "" && email === "") {
+      navigate("/sign-in");
+    } else {
+      navigate("/payment", { state: { price } });
+      
+    }
+      // Pass the price via state
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../public/logo.jpeg";
 
-const Navbar = () => {
+const Navbar = ({name,email}) => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState("");
@@ -74,9 +74,15 @@ const Navbar = () => {
 
         {/* Log In Button */}
         <div>
-          <button className="bg-[#002B5B] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          {
+            name === "" ? (
+              <button className="bg-[#002B5B] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <a href="/sign-in">Log In</a>
           </button>
+            ) : (
+              <h2>{name}</h2>
+            ) 
+          }
         </div>
       </nav>
 
