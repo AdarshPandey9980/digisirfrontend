@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import the Toastify styles
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -32,7 +32,7 @@ const SignUp = () => {
     setOtp(e.target.value);
   };
 
-  // Handle form submission for sign-up using axios
+  // Handle form submission for sign-up
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -60,7 +60,7 @@ const SignUp = () => {
       if (response.status === 200) {
         setEncryptedOtp(resData.otp);
         setUserId(resData.userId);
-        setOtpDialogOpen(true); // Open OTP dialog
+        setOtpDialogOpen(true);
         toast.success("OTP sent! Please verify.");
       } else {
         setError(resData.message || "Something went wrong. Please try again.");
@@ -74,7 +74,7 @@ const SignUp = () => {
     }
   };
 
-  // Handle OTP verification using axios
+  // Handle OTP verification
   const handleOtpSubmit = async (e) => {
     e.preventDefault();
 
@@ -99,9 +99,9 @@ const SignUp = () => {
 
       if (response.status === 200) {
         toast.success("OTP verified successfully! Welcome to DigiSir.");
-        navigate('/sign-in')
-        setOtpDialogOpen(false); // Close OTP dialog
-        setFormData({ name: "", email: "", password: "" }); // Clear form
+        navigate("/sign-in");
+        setOtpDialogOpen(false);
+        setFormData({ name: "", email: "", password: "" });
       } else {
         setError(response.data.message || "Invalid OTP. Please try again.");
         toast.error(response.data.message || "Invalid OTP. Please try again.");
@@ -109,6 +109,45 @@ const SignUp = () => {
     } catch (err) {
       setError("An error occurred. Please try again later.");
       toast.error("An error occurred. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle resend OTP logic
+  const handleResendOtp = async () => {
+    if (!formData.name || !formData.email) {
+      toast.error("Name and email are required to resend OTP.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/tempLogin/resendotp",
+        {
+          name: formData.name,
+          email: formData.email,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+
+      // Check if the response has the OTP
+      if (response.status === 200 && response.data.otp) {
+        setEncryptedOtp(response.data.otp);
+        toast.success("OTP resent successfully! Please check your email.");
+      } else {
+        throw new Error(response.data.message || "Failed to resend OTP.");
+      }
+    } catch (err) {
+      console.error(err.message);
+      toast.error(err.message || "An error occurred while resending OTP.");
     } finally {
       setLoading(false);
     }
@@ -213,11 +252,17 @@ const SignUp = () => {
                 {loading ? "Verifying OTP..." : "Verify OTP"}
               </button>
             </form>
+            <button
+              onClick={handleResendOtp}
+              className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-500 transition-colors mt-4"
+              disabled={loading}
+            >
+              {loading ? "Resending OTP..." : "Resend OTP"}
+            </button>
           </div>
         )}
       </div>
 
-      {/* Toast container */}
       <ToastContainer />
     </section>
   );

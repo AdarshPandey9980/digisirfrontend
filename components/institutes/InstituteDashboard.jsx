@@ -11,6 +11,9 @@ import {
 } from "recharts";
 import { PieChart, Users, GraduationCap, UserPlus, Calendar } from "lucide-react";
 import CalendarComponent from "../ui/Calendar";
+import ParentSection from "./ParentSection";
+import StudentSection from "./StudentSection";
+import TeacherSection from "./TeacherSection";
 
 const attendanceData = [
   { day: "Mon", present: 60, absent: 50 },
@@ -71,8 +74,10 @@ const Dashboard = () => {
       <aside className="hidden w-64 bg-white border-r md:block">
         <nav className="p-4 space-y-2">
           <div
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg ${
-              activeSection === "dashboard" ? "bg-gray-100" : ""
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+              activeSection === "dashboard"
+                ? "bg-blue-100 text-blue-600"
+                : "text-gray-600 hover:bg-gray-100"
             }`}
             onClick={() => handleSidebarClick("dashboard")}
           >
@@ -80,8 +85,10 @@ const Dashboard = () => {
             Dashboard
           </div>
           <div
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 ${
-              activeSection === "teachers" ? "bg-gray-100" : ""
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+              activeSection === "teachers"
+                ? "bg-blue-100 text-blue-600"
+                : "text-gray-600 hover:bg-gray-100"
             }`}
             onClick={() => handleSidebarClick("teachers")}
           >
@@ -89,8 +96,10 @@ const Dashboard = () => {
             Teachers
           </div>
           <div
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 ${
-              activeSection === "students" ? "bg-gray-100" : ""
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+              activeSection === "students"
+                ? "bg-blue-100 text-blue-600"
+                : "text-gray-600 hover:bg-gray-100"
             }`}
             onClick={() => handleSidebarClick("students")}
           >
@@ -98,20 +107,29 @@ const Dashboard = () => {
             Students
           </div>
           <div
-            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 ${
-              activeSection === "parents" ? "bg-gray-100" : ""
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+              activeSection === "parents"
+                ? "bg-blue-100 text-blue-600"
+                : "text-gray-600 hover:bg-gray-100"
             }`}
             onClick={() => handleSidebarClick("parents")}
           >
             <UserPlus className="w-4 h-4" />
             Parents
           </div>
-          {/* Add more sidebar items similarly */}
         </nav>
       </aside>
 
       {/* Main Content */}
       <main className="flex-1 p-8">
+        {/* Header with Logo and Class Name */}
+        <div className="flex justify-center items-center mb-8">
+  <div className="flex items-center">
+    <img src="/logo.png" alt="Logo" className="w-12 h-12" />
+    <span className="ml-2 text-2xl font-bold">DigiSir</span>
+  </div>
+</div>
+
         {activeSection === "dashboard" && (
           <>
             {/* Stats Cards */}
@@ -235,24 +253,15 @@ const Dashboard = () => {
         )}
 
         {activeSection === "teachers" && (
-          <div>
-            <h2 className="text-xl font-bold">Teachers Section</h2>
-            {/* Render teacher-specific content here */}
-          </div>
+          <TeacherSection/>
         )}
 
         {activeSection === "students" && (
-          <div>
-            <h2 className="text-xl font-bold">Students Section</h2>
-            {/* Render student-specific content here */}
-          </div>
+          <StudentSection/>
         )}
 
         {activeSection === "parents" && (
-          <div>
-            <h2 className="text-xl font-bold">Parents Section</h2>
-            {/* Render parent-specific content here */}
-          </div>
+          <ParentSection/>
         )}
       </main>
     </div>
