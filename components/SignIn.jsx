@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
-import Cookies from 'js-cookie'; // Import js-cookie
+import Cookies from "js-cookie";
 
 const SignIn = () => {
   const navigate = useNavigate(); // Hook for navigation
@@ -17,18 +17,17 @@ const SignIn = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Simple validation
     if (!email || !password) {
       setError("Please fill in both fields.");
       toast.error("Please fill in both fields."); // Show toast error
       return;
     }
-  
+
     setError(""); // Reset previous error
     setLoading(true); // Show loading state
-    console.log(email);
-  
+
     try {
       // Send login request to API
       const response = await axios.post(
@@ -40,22 +39,21 @@ const SignIn = () => {
           },
         }
       );
-      console.log(response.data);
-  
-      if (response.data.userToken) {
-        toast.success("Loggd in Succesfully");
-                // Set the userToken cookie
-        Cookies.set('userToken', response.data.userToken, {
-          expires: 1, // Cookie expiration in days
-          secure: process.env.NODE_ENV === 'production',  // Ensure cookie is sent over HTTPS in production
-          sameSite: 'Strict', // CSRF protection
-        });
-  
-        // Redirect to home page after successful login
-        navigate("/");
-      } else {
-        setError(response.data.message);
-        toast.error(response.data.message); // Show toast error
+
+      if (response.status === 200) {
+
+        console.log(response.data);
+
+        const token = response.data?.userToken;
+        Cookies.set("userToken", token, { expires: 1 });
+        
+        // Store user details in localStorage (or sessionStorage)
+        // localStorage.setItem("user", JSON.stringify(response.data.user)); // Assuming response.data.user has user details
+
+        toast.success("Login successful!"); // Show toast success
+
+        // Redirect to home page with user details
+        navigate("/"); // Assuming /home is the home route
       }
     } catch (err) {
       if (err.response) {
@@ -69,7 +67,7 @@ const SignIn = () => {
       setLoading(false); // Hide loading state after request
     }
   };
-    
+
   return (
     <section
       id="sign-in"

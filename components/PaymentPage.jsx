@@ -3,13 +3,40 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
+import { use } from "react";
 
 const PaymentPage = () => {
   const [loading, setLoading] = useState(false);
+  const [email,setEmail]  = useState("")
+  const [name,setName] = useState("")
   const location = useLocation();  
   const navigate = useNavigate();
 
   const { price } = location.state || { price: 500 };
+
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/auth/tempLogin/getCurrentUser', {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        } 
+      });
+
+      const userData = response.data.user;
+      if (userData) {
+        setEmail(userData.email);
+        setName(userData.name);
+      }
+      console.log("User Data:", userData);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect( () => {
+    fetchUser();
+   }, []);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -21,12 +48,16 @@ const PaymentPage = () => {
     };
   }, []);
 
+
+
   const handlePayment = async () => {
     setLoading(true);
     try {
       const { data: order } = await axios.post("http://localhost:8000/api/payment/create-order", {
         amount: price,
         currency: "INR",
+        name:name,
+        email:email
       });
 
       const options = {
@@ -41,7 +72,7 @@ const PaymentPage = () => {
           const { data } = await axios.post("http://localhost:8000/api/payment/verify-payment", {
             order_id: response.razorpay_order_id,
             payment_id: response.razorpay_payment_id,
-            signature: response.razorpay_signature,
+            signature: response.razorpay_signature
           });
           console.log(response.razorpay_payment_id)
 
