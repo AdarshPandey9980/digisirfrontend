@@ -1,173 +1,166 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const InstituteWelcome = () => {
-  const [logo, setLogo] = useState(null);
-  const [className, setClassName] = useState("");
-  const [courseInput, setCourseInput] = useState("");
-  const [courses, setCourses] = useState([]);
-  const [location, setLocation] = useState("");
+const InstituteForm = () => {
+  const [instituteName, setInstituteName] = useState("");
+  const [instituteAddress, setInstituteAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [aadharCardNumber, setAadharCardNumber] = useState("");
+  const [avatar, setAvatar] = useState(null);
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
-  const handleLogoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setLogo(file);
-    }
+  const handleFileChange = (e) => {
+    setAvatar(e.target.files[0]);
   };
 
-  const handleAddCourse = () => {
-    if (courseInput.trim() && !courses.includes(courseInput)) {
-      setCourses([...courses, courseInput.trim()]);
-      setCourseInput("");
-    }
-  };
-
-  const handleRemoveCourse = (course) => {
-    setCourses(courses.filter((c) => c !== course));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!className || courses.length === 0 || !location || !logo) {
-      alert("Please fill in all the details.");
-      return;
+  
+    const data = new FormData();
+    data.append("institute_name", instituteName);
+    data.append("address", instituteAddress);
+    data.append("password", password);
+    data.append("contact_number", contactNumber);
+    data.append("aadharCardNumber", aadharCardNumber);
+    data.append("avatar", avatar); // File upload
+    data.append("email", email);
+    
+  
+    console.log("Sending FormData:");
+    for (let [key, value] of data.entries()) {
+      console.log(`${key}:`, value instanceof File ? value.name : value);
     }
-
-    const formData = new FormData();
-    formData.append("logo", logo);
-    formData.append("className", className);
-    formData.append("courses", JSON.stringify(courses));
-    formData.append("location", location);
-
-    // Replace with actual API call
-    console.log("Submitted Data:", {
-      className,
-      courses,
-      location,
-      logo: logo.name,
-    });
-
-    alert("Details submitted successfully!");
-    navigate("/institute-dashboard");
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/instituteAdmin/register",
+        data, // FormData is sent directly
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Ensure multipart header
+          },
+        }
+      );
+      navigate('/institute-login');
+      
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error response:", error.response?.data || error.message);
+      alert("Failed to submit the form");
+    }
   };
-
+  
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-500 to-blue-500 flex items-center justify-center">
-      <div className="bg-white shadow-xl rounded-3xl p-8 max-w-lg w-full">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Welcome, Institute!</h1>
-        <p className="text-center text-gray-600 mb-8">
-          Please provide your class details to get started.
-        </p>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Class Logo</label>
-            <div className="flex items-center gap-4">
-              <label
-                htmlFor="fileInput"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition"
-              >
-                Choose File
-              </label>
-              <input
-                id="fileInput"
-                type="file"
-                accept="image/*"
-                onChange={handleLogoUpload}
-                className="hidden"
-              />
-              {logo && (
-                <span className="text-gray-600 text-sm truncate">
-                  {logo.name}
-                </span>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Class Name</label>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
+          Institute Registration Form
+        </h2>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Institute Name
+            </label>
             <input
               type="text"
-              value={className}
-              onChange={(e) => setClassName(e.target.value)}
-              placeholder="Enter class name"
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={instituteName}
+              onChange={(e) => setInstituteName(e.target.value)}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Courses Offering</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={courseInput}
-                onChange={(e) => setCourseInput(e.target.value)}
-                placeholder="Type a course and press enter"
-                className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleAddCourse())}
-              />
-              <button
-                type="button"
-                onClick={handleAddCourse}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-              >
-                Add
-              </button>
-            </div>
-            {courses.length > 0 && (
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {courses.map((course, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center bg-gray-200 px-3 py-1 rounded-lg text-sm"
-                  >
-                    {course}
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveCourse(course)}
-                      className="ml-2 text-red-500 hover:text-red-700"
-                    >
-                      ✕
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Location</label>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Institute Address
+            </label>
             <input
               type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Enter location"
-              className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={instituteAddress}
+              onChange={(e) => setInstituteAddress(e.target.value)}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Contact Number
+            </label>
+            <input
+              type="tel"
+              value={contactNumber}
+              onChange={(e) => setContactNumber(e.target.value)}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Aadhar Card Number
+            </label>
+            <input
+              type="text"
+              value={aadharCardNumber}
+              onChange={(e) => setAadharCardNumber(e.target.value)}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Avatar (Upload Image)
+            </label>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              accept="image/*"
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300"
+            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Submit Details
+            Submit
           </button>
         </form>
-
-        {logo && (
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">Uploaded Logo:</p>
-            <img
-              src={URL.createObjectURL(logo)}
-              alt="Class Logo Preview"
-              className="mt-2 mx-auto h-20 w-20 rounded-full object-cover"
-            />
-          </div>
-        )}
       </div>
     </div>
   );
 };
 
-export default InstituteWelcome;
+export default InstituteForm;

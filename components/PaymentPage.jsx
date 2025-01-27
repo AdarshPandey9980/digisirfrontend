@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
 import { use } from "react";
+import Cookies from 'js-cookie';
 
 const PaymentPage = () => {
   const [loading, setLoading] = useState(false);
@@ -16,12 +17,17 @@ const PaymentPage = () => {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/auth/tempLogin/getCurrentUser', {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        } 
-      });
+      const userId = Cookies.get("userId");
+      console.log(userId)
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/tempLogin/getCurrentUser",
+        { userId },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const userData = response.data.user;
       if (userData) {
@@ -49,10 +55,11 @@ const PaymentPage = () => {
   }, []);
 
 
-
+  
   const handlePayment = async () => {
     setLoading(true);
     try {
+      console.log(name, email);
       const { data: order } = await axios.post("http://localhost:8000/api/payment/create-order", {
         amount: price,
         currency: "INR",
@@ -84,9 +91,9 @@ const PaymentPage = () => {
           }
         },
         prefill: {
-          name: "Mithilesh",
-          email: "youremail@example.com",
-          contact: "9321621339",
+          name: name,
+          email: email,
+          contact: "9999999999",
         },
         theme: {
           color: "#0077ff",

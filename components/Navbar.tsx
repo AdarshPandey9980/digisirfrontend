@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import logo from "../public/logo.jpeg";
+import Cookies from "js-cookie"; // Import Cookies for managing cookies
 
-const Navbar = ({name,email}) => {
+const Navbar = ({ name, email }) => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState("");
@@ -40,6 +41,18 @@ const Navbar = ({name,email}) => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleLogout = () => {
+    // Remove the userId cookie on logout
+    Cookies.remove("userId");
+    Cookies.remove("userToken");
+
+    // Optionally, you can also clear other session-related cookies if needed
+    // Cookies.remove("otherSessionCookie");
+
+    // Redirect the user to the login page or home page
+    window.location.href = "/"; // Redirect to the homepage or login page
+  };
+
   return (
     <>
       {/* Desktop Navbar */}
@@ -72,17 +85,20 @@ const Navbar = ({name,email}) => {
           )}
         </div>
 
-        {/* Log In Button */}
+        {/* Log In / Log Out Button */}
         <div>
-          {
-            name === "" ? (
-              <button className="bg-[#002B5B] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <a href="/sign-in">Log In</a>
-          </button>
-            ) : (
-              <h2>{name}</h2>
-            ) 
-          }
+          {name === "" ? (
+            <button className="bg-[#002B5B] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+              <a href="/sign-in">Log In</a>
+            </button>
+          ) : (
+            <button
+              onClick={handleLogout} // Trigger logout function
+              className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-800"
+            >
+              Log Out
+            </button>
+          )}
         </div>
       </nav>
 
@@ -118,9 +134,7 @@ const Navbar = ({name,email}) => {
 
         {/* Mobile Menu Links */}
         <div
-          className={`${
-            isMobileMenuOpen ? "block" : "hidden"
-          } px-4 pb-4 bg-white`}
+          className={`${isMobileMenuOpen ? "block" : "hidden"} px-4 pb-4 bg-white`}
         >
           {["home", "about", "features", "pricing", "contact", "faq"].map(
             (section) => (

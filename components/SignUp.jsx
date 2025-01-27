@@ -99,7 +99,7 @@ const SignUp = () => {
 
       if (response.status === 200) {
         toast.success("OTP verified successfully! Welcome to DigiSir.");
-        navigate("/sign-in");
+        navigate("/");
         setOtpDialogOpen(false);
         setFormData({ name: "", email: "", password: "" });
       } else {
@@ -259,6 +259,19 @@ const SignUp = () => {
             >
               {loading ? "Resending OTP..." : "Resend OTP"}
             </button>
+          </div>
+        )}
+
+        {/* Link to navigate to sign-in */}
+        {!otpDialogOpen && (
+          <div className="text-center mt-4">
+            <span className="text-white">Already have an account? </span>
+            <a
+              href="/sign-in"
+              className="text-emerald-500 hover:underline"
+            >
+              Sign In
+            </a>
           </div>
         )}
       </div>
