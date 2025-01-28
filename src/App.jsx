@@ -7,6 +7,8 @@ import PaymentPage from '../components/PaymentPage'
 import InstituteSetup from '../components/institutes/InstitueSetup'
 import InstituteDashboard from '../components/institutes/InstituteDashboard'
 import InstituteLoginForm from '../components/institutes/InstituteLogin'
+import StudentLogin from '../components/students/StudentLogin'
+import StudentRegister from '../components/students/StudentRegister'
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
           <Route path='/institute-setup' element={<InstituteSetup/>}/>
           <Route path='/institute-dashboard' element={<InstituteDashboard/>}/>
           <Route path='/institute-login' element={<InstituteLoginForm/>}/>
+          <Route path='/student-login' element={<StudentLogin/>}/>
+          <Route path='/student-register' element={<StudentRegister/>}/>
         </Routes>
       </BrowserRouter>
     </>

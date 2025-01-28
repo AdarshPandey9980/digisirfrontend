@@ -7,6 +7,7 @@ const Navbar = ({ name, email }) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown menu
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,13 +42,14 @@ const Navbar = ({ name, email }) => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   const handleLogout = () => {
     // Remove the userId cookie on logout
     Cookies.remove("userId");
     Cookies.remove("userToken");
-
-    // Optionally, you can also clear other session-related cookies if needed
-    // Cookies.remove("otherSessionCookie");
 
     // Redirect the user to the login page or home page
     window.location.href = "/"; // Redirect to the homepage or login page
@@ -79,25 +81,41 @@ const Navbar = ({ name, email }) => {
                     : ""
                 }`}
               >
-                {section.charAt(0).toUpperCase() + section.slice(1).replace('-', ' ')}
+                {section.charAt(0).toUpperCase() + section.slice(1).replace("-", " ")}
               </a>
             )
           )}
         </div>
 
-        {/* Log In / Log Out Button */}
-        <div>
-          {name === "" ? (
+        {/* Avatar Section */}
+        <div className="relative">
+          {name ? (
+            <div
+              onClick={toggleDropdown}
+              className="w-10 h-10 flex items-center justify-center bg-[#002B5B] text-white rounded-full cursor-pointer select-none relative"
+            >
+              {name.charAt(0).toUpperCase()}
+            </div>
+          ) : (
             <button className="bg-[#002B5B] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors">
               <a href="/sign-in">Log In</a>
             </button>
-          ) : (
-            <button
-              onClick={handleLogout} // Trigger logout function
-              className="bg-red-600 px-4 py-2 rounded-lg hover:bg-red-800"
-            >
-              Log Out
-            </button>
+          )}
+
+          {/* Dropdown Menu */}
+          {isDropdownOpen && name && email && (
+            <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg py-2 w-48">
+              <div className="px-4 py-2 text-sm text-gray-700 border-b">
+                <p className="font-semibold">{name}</p>
+                <p className="text-xs text-gray-500">{email}</p>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100"
+              >
+                Log Out
+              </button>
+            </div>
           )}
         </div>
       </nav>
@@ -134,7 +152,9 @@ const Navbar = ({ name, email }) => {
 
         {/* Mobile Menu Links */}
         <div
-          className={`${isMobileMenuOpen ? "block" : "hidden"} px-4 pb-4 bg-white`}
+          className={`${
+            isMobileMenuOpen ? "block" : "hidden"
+          } px-4 pb-4 bg-white`}
         >
           {["home", "about", "features", "pricing", "contact", "faq"].map(
             (section) => (
@@ -147,13 +167,28 @@ const Navbar = ({ name, email }) => {
                     : ""
                 }`}
               >
-                {section.charAt(0).toUpperCase() + section.slice(1).replace('-', ' ')}
+                {section.charAt(0).toUpperCase() + section.slice(1).replace("-", " ")}
               </a>
             )
           )}
-          <button className="mt-4 bg-[#002B5B] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors w-full">
-            <a href="/sign-in">Log In</a>
-          </button>
+          {name ? (
+            <div className="mt-4">
+              <div className="bg-gray-100 p-2 rounded-lg text-sm">
+                <p className="font-semibold">{name}</p>
+                <p className="text-xs text-gray-500">{email}</p>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="mt-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition-colors w-full"
+              >
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <button className="mt-4 bg-[#002B5B] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors w-full">
+              <a href="/sign-in">Log In</a>
+            </button>
+          )}
         </div>
       </nav>
     </>

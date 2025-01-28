@@ -8,12 +8,14 @@ import FAQ from "./Faq";
 import Footer from "./Footer";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false); // For modal visibility
   const [joiningCode, setJoiningCode] = useState(""); // To store joining code
+  const navigate = useNavigate();
 
   const fetchUser = async () => {
     try {
@@ -38,17 +40,28 @@ export default function Home() {
   useEffect(() => {
     fetchUser();
   }, []);
-
-  const handleJoinClass = () => {
-    if (joiningCode.trim() === "") {
-      alert("Please enter a valid joining code.");
-    } else {
-      // Handle the joining class logic here, like making an API call to join a class
-      console.log("Joining class with code:", joiningCode);
-      setIsModalOpen(false); // Close the modal after submitting
+  const handleJoinClass = async () => {
+    try {
+      const response = await axios.post("http://localhost:8000/api/instituteAdmin/addMembers", {
+        key: joiningCode, // Updated from joiningKey to joiningCode
+      });
+      alert("Member added successfully!");
+      const keyName = response.data.result?.[0]?.key_name;
+      console.log("Key Name:", keyName);
+      if (keyName === "studentKey") {
+        navigate("/student-login");
+      } else if (keyName === "parentKey") {
+        navigate("/parent-login");
+      } else {
+        navigate("/teacher-login");
+      }
+      setIsModalOpen(false); // Close the modal after successful submission
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message);
+      alert("Failed to add member. Please try again.");
     }
   };
-
+  
   const handleCreateClass = () => {
     // Redirect to the pricing section
     window.location.href = "#pricing";
@@ -79,6 +92,7 @@ export default function Home() {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setIsModalOpen(true)} // Open modal for "Join a Class"
+                  // onSubmit={handleJoinClass}
                   className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg hover:bg-slate-800 transition-colors"
                 >
                   <span>Join a Class</span>
