@@ -20,11 +20,6 @@ function App() {
           <Route path="/sign-up" element={<SignUp/>} />
           <Route path="/sign-in" element={<SignIn/>} />
           <Route path='/payment' element={<PaymentPage/>}/>
-          <Route path='/institute-setup' element={<InstituteSetup/>}/>
-          <Route path='/institute-dashboard' element={<InstituteDashboard/>}/>
-          <Route path='/institute-login' element={<InstituteLoginForm/>}/>
-          <Route path='/student-login' element={<StudentLogin/>}/>
-          <Route path='/student-register' element={<StudentRegister/>}/>
         </Routes>
       </BrowserRouter>
     </>
