@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../public/logo.jpeg";
+import logo from "../public/logo.png";
 import Cookies from "js-cookie"; // Import Cookies for managing cookies
 
 const Navbar = ({ name, email }) => {
