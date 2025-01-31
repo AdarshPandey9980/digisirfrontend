@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import logo from "../public/logo.jpeg";
+import logo from "../public/logo.jpeg";
 import Cookies from "js-cookie"; // Import Cookies for managing cookies
 
 const Navbar = ({ name, email }) => {
@@ -65,7 +65,7 @@ const Navbar = ({ name, email }) => {
       >
         {/* Logo Section */}
         <div className="flex-shrink-0">
-          <img src={"../public/logo.png"} alt="DigiSir Logo" width={40} height={40} />
+          <img src={logo} alt="DigiSir Logo" width={40} height={40} />
         </div>
 
         {/* Nav Links Section */}
@@ -125,7 +125,7 @@ const Navbar = ({ name, email }) => {
         <div className="flex items-center justify-between px-4 py-3">
           {/* Logo Section */}
           <div className="flex-shrink-0">
-            <img src={"../public/logo.png"} alt="DigiSir Logo" width={40} height={40} />
+            <img src={logo} alt="DigiSir Logo" width={40} height={40} />
           </div>
 
           {/* Hamburger Menu */}
