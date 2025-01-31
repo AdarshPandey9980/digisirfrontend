@@ -92,7 +92,7 @@ export default function Home() {
               </div>
 
               <h1 className="text-5xl font-bold text-white leading-tight">
-                Access the world's best school app with DigiSir.
+                Access the world's best institute app with DigiSir.
               </h1>
 
               <p className="text-emerald-50 text-lg">

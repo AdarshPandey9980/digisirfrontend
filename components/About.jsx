@@ -30,7 +30,7 @@ export default function Home() {
               </h1>
               <p className="text-base lg:text-lg text-slate-600 leading-relaxed">
                 At DigiSir, we are transforming the educational experience with
-                cutting-edge technology that streamlines school operations. Our
+                cutting-edge technology that streamlines institute operations. Our
                 platform facilitates seamless communication between teachers,
                 students, and parents while simplifying tasks like attendance,
                 assignments, and schedules. We empower schools to be more
