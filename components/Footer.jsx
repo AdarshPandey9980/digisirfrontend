@@ -9,7 +9,7 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
-import logo from "../public/logo.jpeg"; // Update this path according to your project structure
+import logo from "../public/logo.png"; // Update this path according to your project structure
 
 export default function Footer() {
   return (
@@ -60,25 +60,25 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300">support@digisir.com</span>
+                <span className="text-gray-300">eliteforumsindia@gmail.com</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <span className="text-gray-300">+91 9511868948</span>
               </li>
-              <li className="flex items-start space-x-3">
+              {/* <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-300 leading-relaxed">
                   123 Education Street,
                   <br />
                   Learning City, ED 12345
                 </span>
-              </li>
+              </li> */}
             </ul>
           </div>
 
           {/* Social Media Links */}
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
             <div className="flex space-x-4">
               {[Facebook, Twitter, Instagram, Linkedin, Youtube].map(
@@ -93,7 +93,7 @@ export default function Footer() {
                 )
               )}
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom Bar */}
