@@ -16,7 +16,7 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false); // For modal visibility
   const [joiningCode, setJoiningCode] = useState(""); // To store joining code
   const navigate = useNavigate();
-
+  let param="";
   const fetchUser = async () => {
     try {
       const userId = Cookies.get("userId");
@@ -42,18 +42,32 @@ export default function Home() {
   }, []);
   const handleJoinClass = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/api/instituteAdmin/addMembers", {
+      const response = await axios.post("http://localhost:8000/api/instituteAdmin/get-member-by-key", {
         key: joiningCode, // Updated from joiningKey to joiningCode
       });
       alert("Member added successfully!");
+      
       const keyName = response.data.result?.[0]?.key_name;
       console.log("Key Name:", keyName);
       if (keyName === "studentKey") {
         navigate("/student-login");
+        param="student"
       } else if (keyName === "parentKey") {
         navigate("/parent-login");
+        param="parent"
       } else {
         navigate("/teacher-login");
+        param="teacher";
+      }
+      console.log(param);
+      try {
+        const userId = Cookies.get("userId");
+        console.log(userId,joiningCode);
+      const request = await axios.post(`http://localhost:8000/api/${param}/join-institute`,{
+        key:joiningCode,userId
+      });
+      } catch (error) {
+        console.log(error)
       }
       setIsModalOpen(false); // Close the modal after successful submission
     } catch (error) {

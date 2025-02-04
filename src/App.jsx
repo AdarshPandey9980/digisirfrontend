@@ -4,11 +4,6 @@ import Hero from '../components/Hero'
 import SignUp from '../components/SignUp'
 import SignIn from '../components/SignIn'
 import PaymentPage from '../components/PaymentPage'
-import InstituteSetup from '../components/institutes/InstitueSetup'
-import InstituteDashboard from '../components/institutes/InstituteDashboard'
-import InstituteLoginForm from '../components/institutes/InstituteLogin'
-import StudentLogin from '../components/students/StudentLogin'
-import StudentRegister from '../components/students/StudentRegister'
 
 function App() {
 
