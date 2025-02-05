@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Check, X, Info } from "lucide-react"
+import { Check, X } from "lucide-react"
 
 const features = [
   { name: "Student Management", common: true },
@@ -11,6 +11,18 @@ const features = [
   { name: "Student Track Record via Aadhaar", common: false },
   { name: "Comprehensive Remark History", common: false },
   { name: "Pre-joining Verification", common: false },
+  { name: "Seminar Leads Management", common: false },
+  { name: "Feedback QR", common: false },
+  { name: "PR Assistant", common: false },
+  { name: "Brand Building Kit", common: false },
+  { name: "Fees Recovery Made Easy", common: false },
+  { name: "Bad Debt Reduction", common: false },
+  { name: "Stock Manager", common: false },
+  { name: "Fees Receipt Generation", common: false },
+  { name: "Student ID Card Generation", common: false },
+  { name: "Unique ID Generator", common: false },
+  { name: "Historic Record Keeping", common: false },
+  { name: "Birthday Wishes Reminder", common: false },
 ]
 
 const systems = ["Basic IMS", "Advanced IMS", "Our IMS"]
@@ -23,21 +35,14 @@ function ComparisonPage() {
       return <Check className="text-green-500" />
     }
     if (systemIndex === 2) {
-      return (
-        <button
-          className="text-blue-500 hover:text-blue-700 flex items-center"
-          onClick={() => setActiveFeature(feature.name)}
-        >
-          <Info className="mr-1" /> Details
-        </button>
-      )
+      return <Check className="text-green-500" /> // Show a tick mark for "Our IMS" for exclusive features
     }
     return <X className="text-red-500" />
   }
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-6 text-center text-[#002B5B]">Why to choose Digisir?</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center text-[#002B5B]">Why choose Digisir?</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-100">
           <caption className="sr-only">Comparison of different Institution Management Systems</caption>
@@ -65,35 +70,8 @@ function ComparisonPage() {
           </tbody>
         </table>
       </div>
-
-      {activeFeature && <FeatureDialog feature={activeFeature} onClose={() => setActiveFeature(null)} />}
     </div>
   )
 }
 
-function FeatureDialog({ feature, onClose }) {
-  const descriptions = {
-    "Student Track Record via Aadhaar":
-      "Our system allows institutions to view a student's previous track record by using their Aadhaar card number. This feature provides a comprehensive history of the student's academic performance and behavior across different institutions.",
-    "Comprehensive Remark History":
-      "Both students and teachers have a detailed remark history in their profiles. This feature allows for a holistic view of performance, feedback, and growth over time.",
-    "Pre-joining Verification":
-      "Institutions can verify both student and teacher records before they join. This feature ensures transparency and helps maintain high standards within the institution.",
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 bg-opacity-100 flex items-center justify-center p-4 backdrop-blur-lg">
-  <div className="bg-white rounded-lg p-6 max-w-md w-full border border-black">
-    <h2 className="text-xl font-bold mb-2">{feature}</h2>
-    <p className="text-gray-600 mb-4">{descriptions[feature]}</p>
-    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={onClose}>
-      Close
-    </button>
-  </div>
-</div>
-
-  )
-}
-
 export default ComparisonPage
-

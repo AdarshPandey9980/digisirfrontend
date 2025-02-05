@@ -18,7 +18,7 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false); // For modal visibility
   const [joiningCode, setJoiningCode] = useState(""); // To store joining code
   const navigate = useNavigate();
-
+  let param="";
   const fetchUser = async () => {
     try {
       const userId = Cookies.get("userId");
@@ -54,19 +54,19 @@ export default function Home() {
           "Content-Type": "application/json",
         }});
       alert("Member added successfully!");
+      
       const keyName = response.data.result?.[0]?.key_name;
       console.log("Key Name:", keyName);
       if (keyName === "studentKey") {
-        // redirect("http://localhost:5174/student-login");
-        window.location.href = "http://localhost:5174/student-login";
-        // navigate("http://localhost:5174/student-login");
+
+        navigate("/student-login");
+        param="student"
       } else if (keyName === "parentKey") {
         window.location.href = "http://localhost:5174/parent-login";
       } else {
         window.location.href = "http://localhost:5174/teacher-login";
       }
     }
-    setIsModalOpen(false);
        // Close the modal after successful submission
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
@@ -123,7 +123,7 @@ export default function Home() {
                 alt="App Preview"
                 width={600}
                 height={800}
-                className="rounded-3xl shadow-2xl"
+                className="rounded-3xl shadow-2xl max-h-[450px] max-w-[450x]"
               />
             </div>
           </div>

@@ -1,36 +1,29 @@
-import React from "react";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Youtube,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
-import logo from "../public/logo.png"; // Update this path according to your project structure
+import { Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#002B5B] text-white">
-      <div className="container mx-auto px-6 py-12">
+    <footer className="bg-[#002B5B] text-white py-12">
+      <div className="container mx-auto px-6">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          
           {/* Company Info Section */}
           <div className="space-y-4">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <img src={logo} alt="DigiSir Logo" className="w-10 h-10" />
+            <div className="flex items-center justify-center space-x-3">
+              <img
+                src="/logo.jpeg" // Update path to match your project structure
+                alt="DigiSir Logo"
+                width={40}
+                height={40}
+              />
               <h2 className="text-2xl font-bold">DigiSir</h2>
             </div>
-            <p className="text-gray-300 max-w-xs leading-relaxed">
-              Empowering education through digital innovation. Transform your
-              teaching journey with DigiSir.
+            <p className="text-gray-300 max-w-xs mx-auto">
+              Empowering education through digital innovation. Transform your teaching journey with DigiSir.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links Section */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3">
@@ -40,7 +33,7 @@ export default function Footer() {
                 { name: "Features", link: "#features" },
                 { name: "Pricing", link: "#pricing" },
                 { name: "Contact Us", link: "#contact" },
-                { name: "FAQ", link: "#faq" },
+                { name: "FAQ", link: "#faq" }
               ].map((item) => (
                 <li key={item.name}>
                   <a
@@ -54,59 +47,42 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact Info Section */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-4">
-              <li className="flex items-center space-x-3">
+              <li className="flex items-center justify-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-300">infohellodigisir@gmail.com</span>
               </li>
-              <li className="flex items-center space-x-3">
+              <li className="flex items-center justify-center space-x-3">
                 <Phone className="h-5 w-5 text-gray-300" />
                 <span className="text-gray-300">+91 7770030131</span>
               </li>
             </ul>
-            <ul className="space-y-4 ">
-              <h1 className="my-3 text-bold text-lg">Facing any technical issue? Contact here</h1>
-              <li className="flex items-center space-x-3">
+          </div>
+
+          {/* Support Section */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Support</h3>
+            <ul className="space-y-4">
+              <h1 className="my-3 text-lg font-semibold">Facing any technical issue? Contact here</h1>
+              <li className="flex items-center justify-center space-x-3">
                 <Phone className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300">0000000000</span>
+                <span className="text-gray-300">+91 95118 68948</span>
               </li>
-            </ul>
-            <ul className="space-y-4 ">
-              <h1 className="my-3 text-bold text-lg">Wann talk administrative sales service</h1>
-              <li className="flex items-center space-x-3">
+              <h1 className="my-3 text-lg font-semibold">Want to talk administrative sales service?</h1>
+              <li className="flex items-center justify-center space-x-3">
                 <Phone className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300">0000000000</span>
+                <span className="text-gray-300">+91 73850 14856</span>
               </li>
             </ul>
           </div>
-
-          
-
-          {/* Social Media Links */}
-          {/* <div>
-            <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-            <div className="flex space-x-4">
-              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map(
-                (Icon, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    <Icon className="h-6 w-6" />
-                  </a>
-                )
-              )}
-            </div>
-          </div> */}
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-white/10 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        {/* Bottom Bar Section */}
+        <div className="border-t border-white/10 mt-12 pt-8 text-center">
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
             <p className="text-gray-300 text-sm">
               © {new Date().getFullYear()} DigiSir. All rights reserved.
             </p>
