@@ -1,83 +1,143 @@
-"use client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
+import { Badge } from "./ui/badge"
+import {
+  School,
+  Users,
+  FileText,
+  Bell,
+  Calendar,
+  Video,
+  BarChartIcon as ChartBar,
+  MessageCircle,
+  ArrowUp,
+} from "lucide-react"
+import { Button } from "./ui/button"
+// import { FeatureBanners } from "./FeatureBanners"
+// import { TestimonialSection } from "./TestimonialSection"
+// import { Header } from "./Header"
 
-import { BookOpen, Calendar, User, BarChart2, Briefcase, CreditCard } from "lucide-react";
+const features = [
+  {
+    title: "Student Management",
+    description: "Comprehensive student data management including US-ID, online forms, and more.",
+    icon: <Users className="h-6 w-6" />,
+    badges: ["Admission", "Enquiry", "I-Card", "Attendance"],
+  },
+  {
+    title: "Academic Tools",
+    description: "Powerful tools for academic management and assessment.",
+    icon: <School className="h-6 w-6" />,
+    badges: ["Self Paper Generator", "Test Storage", "Progress Reports"],
+  },
+  {
+    title: "Communication",
+    description: "Efficient communication channels for students, parents, and staff.",
+    icon: <Bell className="h-6 w-6" />,
+    badges: ["WhatsApp Integration", "Notices", "Gentle Reminders"],
+  },
+  {
+    title: "Scheduling",
+    description: "Comprehensive scheduling and time management features.",
+    icon: <Calendar className="h-6 w-6" />,
+    badges: ["Timetable", "Lecture Booking", "In/Out Time Tracking"],
+  },
+  {
+    title: "Content Management",
+    description: "Robust content creation and management capabilities.",
+    icon: <FileText className="h-6 w-6" />,
+    badges: ["PDF Storage", "Recorded Lectures", "Notes Distribution"],
+  },
+  {
+    title: "Virtual Learning",
+    description: "Advanced virtual and hybrid learning solutions.",
+    icon: <Video className="h-6 w-6" />,
+    badges: ["Live Lectures", "Hybrid Classes", "Doubt Solving"],
+  },
+  {
+    title: "Analytics & Reporting",
+    description: "Comprehensive analytics and reporting tools for data-driven decisions.",
+    icon: <ChartBar className="h-6 w-6" />,
+    badges: ["MIS Reports", "Performance Tracking", "Enquiry Analytics"],
+  },
+  {
+    title: "Administration",
+    description: "Streamlined administrative tools for efficient institute management.",
+    icon: <MessageCircle className="h-6 w-6" />,
+    badges: ["Fee Management", "Staff Management", "Event Planning"],
+  },
+]
 
 export default function FeaturesSection() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   return (
-    <section id="features" className="py-16 bg-gray-100">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-[#002B5B] mb-12">
-          Highlights of DigiSir.
-        </h2>
+    <div className="min-h-screen bg-gradient-to-b from-[#f0f4f8] to-[#e0e8f0]">
+      {/* <Header /> */}
+      <div className="container mx-auto px-4 py-20">
+        <section id="home">
+          <h1 className="text-4xl font-bold text-center mb-8 text-[#002B5B]">
+            Comprehensive Educational Management System
+          </h1>
+          <p className="text-xl text-center mb-12 text-[#004a9f]">
+            Empower your institution with our all-in-one solution for seamless management and enhanced learning
+            experiences.
+          </p>
+        </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Card 1 */}
-          <div className="bg-[#002B5B] p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center mb-4">
-              <BookOpen className="text-white w-12 h-12" />
-              <h3 className="text-xl font-semibold text-white ml-4">Academic Management</h3>
-            </div>
-            <p className="text-white mt-2">
-              Streamline academic operations with ease, including managing class schedules, grading, and more, ensuring smooth workflows for students and faculty alike.
-            </p>
-          </div>
+        <section id="features">
+          {/* <FeatureBanners /> */}
 
-          {/* Card 2 */}
-          <div className="bg-[#002B5B] p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center mb-4">
-              <Calendar className="text-white w-12 h-12" />
-              <h3 className="text-xl font-semibold text-white ml-4">Timetable Generation</h3>
-            </div>
-            <p className="text-white mt-2">
-              Automatically generate class timetables based on teacher availability and room capacity, making the scheduling process quick and efficient.
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+            {features.map((feature, index) => (
+              <Card key={index} className="border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-[#002B5B]">
+                    <span className="transition-transform duration-300 hover:scale-110">{feature.icon}</span>
+                    <span>{feature.title}</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="mb-4 text-[#004a9f]">{feature.description}</CardDescription>
+                  <div className="flex flex-wrap gap-2">
+                    {feature.badges.map((badge, badgeIndex) => (
+                      <Badge
+                        key={badgeIndex}
+                        variant="secondary"
+                        className="bg-[#e0e8f0] text-[#002B5B] transition-colors duration-300 hover:bg-[#002B5B] hover:text-white"
+                      >
+                        {badge}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
+        </section>
 
-          {/* Card 3 */}
-          <div className="bg-[#002B5B] p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center mb-4">
-              <User className="text-white w-12 h-12" />
-              <h3 className="text-xl font-semibold text-white ml-4">Student Database</h3>
-            </div>
-            <p className="text-white mt-2">
-              Maintain an organized and easily accessible student database, ensuring all student information is secure and readily available for administrative use.
-            </p>
-          </div>
+        <section id="testimonials">
+          {/* <TestimonialSection /> */}
+        </section>
 
-          {/* Card 4 */}
-          <div className="bg-[#002B5B] p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center mb-4">
-              <BarChart2 className="text-white w-12 h-12" />
-              <h3 className="text-xl font-semibold text-white ml-4">Performance Analytics</h3>
-            </div>
-            <p className="text-white mt-2">
-              Analyze student performance through detailed reports and data visualization, helping educators and administrators track progress and improve outcomes.
-            </p>
-          </div>
-
-          {/* Card 5 */}
-          <div className="bg-[#002B5B] p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center mb-4">
-              <Briefcase className="text-white w-12 h-12" />
-              <h3 className="text-xl font-semibold text-white ml-4">Staff Management</h3>
-            </div>
-            <p className="text-white mt-2">
-              Manage staff schedules, tasks, and profiles seamlessly, ensuring a balanced workload and better coordination among faculty members and staff.
-            </p>
-          </div>
-
-          {/* Card 6 */}
-          <div className="bg-[#002B5B] p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center mb-4">
-              <CreditCard className="text-white w-12 h-12" />
-              <h3 className="text-xl font-semibold text-white ml-4">Fee Management</h3>
-            </div>
-            <p className="text-white mt-2">
-              Simplify the fee tracking process by automating payment collection, fee generation, and reporting, ensuring financial operations run smoothly.
-            </p>
-          </div>
-        </div>
+        <section id="cta" className="mt-12 text-center">
+          <p className="text-2xl font-semibold mb-4 text-[#002B5B]">Ready to transform your educational institute?</p>
+          <button className="bg-[#002B5B] text-white hover:bg-[#004a9f] px-6 py-3 rounded-lg text-lg font-medium transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+            Get Started Today
+          </button>
+        </section>
       </div>
-    </section>
-  );
+
+      <div className="fixed bottom-8 right-8">
+        <Button
+          onClick={scrollToTop}
+          className="bg-[#002B5B] text-white hover:bg-[#004a9f] rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+        >
+          <ArrowUp className="w-6 h-6" />
+        </Button>
+      </div>
+    </div>
+  )
 }
+

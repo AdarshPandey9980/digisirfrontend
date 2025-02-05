@@ -8,7 +8,8 @@ import FAQ from "./Faq";
 import Footer from "./Footer";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { TestimonialSection } from "./TestmorialSection";
+import { redirect, useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -42,34 +43,30 @@ export default function Home() {
   }, []);
   const handleJoinClass = async () => {
     try {
+      if (email === "" || name === "") {
+        navigate('/sign-in')
+      } else {
       const response = await axios.post("http://localhost:8000/api/instituteAdmin/get-member-by-key", {
         key: joiningCode, // Updated from joiningKey to joiningCode
-      });
+      },{
+        headers: {
+          "Content-Type": "application/json",
+        }});
       alert("Member added successfully!");
       
       const keyName = response.data.result?.[0]?.key_name;
       console.log("Key Name:", keyName);
       if (keyName === "studentKey") {
+
         navigate("/student-login");
         param="student"
       } else if (keyName === "parentKey") {
-        navigate("/parent-login");
-        param="parent"
+        window.location.href = "http://localhost:5174/parent-login";
       } else {
-        navigate("/teacher-login");
-        param="teacher";
+        window.location.href = "http://localhost:5174/teacher-login";
       }
-      console.log(param);
-      try {
-        const userId = Cookies.get("userId");
-        console.log(userId,joiningCode);
-      const request = await axios.post(`http://localhost:8000/api/${param}/join-institute`,{
-        key:joiningCode,userId
-      });
-      } catch (error) {
-        console.log(error)
-      }
-      setIsModalOpen(false); // Close the modal after successful submission
+    }
+       // Close the modal after successful submission
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
       alert("Failed to add member. Please try again.");
@@ -95,7 +92,7 @@ export default function Home() {
               </div>
 
               <h1 className="text-5xl font-bold text-white leading-tight">
-                Access the world's best school app with DigiSir.
+                Access the world's best institute app with DigiSir.
               </h1>
 
               <p className="text-emerald-50 text-lg">
@@ -105,14 +102,14 @@ export default function Home() {
 
               <div className="flex items-center gap-4">
                 <button
-                  onClick={() => setIsModalOpen(true)} // Open modal for "Join a Class"
+                  // onClick={() => setIsModalOpen(true)} // Open modal for "Join a Class"
                   // onSubmit={handleJoinClass}
                   className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg hover:bg-slate-800 transition-colors"
                 >
                   <span>Join a Class</span>
                 </button>
                 <button
-                  onClick={handleCreateClass} // Redirect to pricing section
+                  // onClick={handleCreateClass} // Redirect to pricing section
                   className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg hover:bg-slate-800 transition-colors"
                 >
                   <span>Create a Class</span>
@@ -166,8 +163,9 @@ export default function Home() {
       <About />
       <Features />
       <Pricing name={name} email={email} />
-      <FAQ />
+      <TestimonialSection/>
       <Contact />
+      <FAQ />
       <Footer />
     </>
   );

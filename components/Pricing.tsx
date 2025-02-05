@@ -5,36 +5,38 @@ import { useNavigate } from "react-router-dom";
 const plans = [
   {
     name: "1 Year Plan",
-    price: 99,
+    price: 20000,
     duration: "per year",
     description: "Perfect for getting started",
-    features: ["Access to all basic features", "Up to 100 student profiles", "5GB cloud storage", "Email support"],
+    features: ["Access to all basic features", "Unlimited students and teachers profile", "25GB cloud storage", "Email support","All the managements will be avaliable","live lectures and recording avaliable"],
   },
   {
-    name: "2 Year Plan",
-    price: 179,
+    name: "1 Year Plan",
+    price: 22500,
     duration: "per 2 years",
     description: "Great value for growing educators",
     features: [
-      "All features in 1 Year Plan",
-      "Up to 500 student profiles",
-      "20GB cloud storage",
+      "All features of 1st Plan",
+      "Unlimited students and teachers profile",
+      "50GB cloud storage",
       "Priority email & chat support",
       "Advanced analytics",
+      "live lectures and recording avaliable"
     ],
   },
   {
-    name: "5 Year Plan",
-    price: 399,
+    name: "1 Year Plan",
+    price: 25000,
     duration: "per 5 years",
     description: "Best value for established institutions",
     features: [
-      "All features in 2 Year Plan",
+      "All features of 2nd  Plan",
       "Unlimited student profiles",
       "100GB cloud storage",
       "24/7 phone, email & chat support",
       "Custom integrations",
       "Dedicated account manager",
+      "Personalized website"
     ],
   },
 ];
@@ -89,7 +91,7 @@ const PricingSection = ({name = "",email = ""}) => {
               </div>
               <div className="mt-4">
                 <button
-                  onClick={() => handleChoosePlan(plan.price)}  // Pass the price of the selected plan
+                  // onClick={() => handleChoosePlan(plan.price)}  // Pass the price of the selected plan
                   className="w-full bg-[#002B5B] hover:bg-blue-700 text-white py-2 rounded-lg transition-colors"
                 >
                   Choose a plan

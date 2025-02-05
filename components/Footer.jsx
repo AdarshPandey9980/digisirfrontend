@@ -1,15 +1,5 @@
-import React from "react";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Youtube,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
-import logo from "../public/logo.jpeg"; // Update this path according to your project structure
+import Image from 'next/image';
+import { Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -21,7 +11,12 @@ export default function Footer() {
           <div className="space-y-4">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <img src={logo} alt="DigiSir Logo" className="w-10 h-10" />
+              <Image
+                src="/logo.png" // Update path to match your Next.js project structure
+                alt="DigiSir Logo"
+                width={40}
+                height={40}
+              />
               <h2 className="text-2xl font-bold">DigiSir</h2>
             </div>
             <p className="text-gray-300 max-w-xs leading-relaxed">
@@ -34,13 +29,13 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-3">
-              {[
+              {[ 
                 { name: "Home", link: "/" },
                 { name: "About Us", link: "#about" },
                 { name: "Features", link: "#features" },
                 { name: "Pricing", link: "#pricing" },
                 { name: "Contact Us", link: "#contact" },
-                { name: "FAQ", link: "#faq" },
+                { name: "FAQ", link: "#faq" }
               ].map((item) => (
                 <li key={item.name}>
                   <a
@@ -60,39 +55,13 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300">support@digisir.com</span>
+                <span className="text-gray-300">eliteforumsindia@gmail.com</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300 leading-relaxed">
-                  123 Education Street,
-                  <br />
-                  Learning City, ED 12345
-                </span>
+                <span className="text-gray-300">+91 9511868948</span>
               </li>
             </ul>
-          </div>
-
-          {/* Social Media Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-            <div className="flex space-x-4">
-              {[Facebook, Twitter, Instagram, Linkedin, Youtube].map(
-                (Icon, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    <Icon className="h-6 w-6" />
-                  </a>
-                )
-              )}
-            </div>
           </div>
         </div>
 
