@@ -60,22 +60,30 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300">eliteforumsindia@gmail.com</span>
+                <span className="text-gray-300">infohellodigisir@gmail.com</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300">+91 9511868948</span>
+                <span className="text-gray-300">+91 7770030131</span>
               </li>
-              {/* <li className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-gray-300" />
-                <span className="text-gray-300 leading-relaxed">
-                  123 Education Street,
-                  <br />
-                  Learning City, ED 12345
-                </span>
-              </li> */}
+            </ul>
+            <ul className="space-y-4 ">
+              <h1 className="my-3 text-bold text-lg">Facing any technical issue? Contact here</h1>
+              <li className="flex items-center space-x-3">
+                <Phone className="h-5 w-5 text-gray-300" />
+                <span className="text-gray-300">0000000000</span>
+              </li>
+            </ul>
+            <ul className="space-y-4 ">
+              <h1 className="my-3 text-bold text-lg">Wann talk administrative sales service</h1>
+              <li className="flex items-center space-x-3">
+                <Phone className="h-5 w-5 text-gray-300" />
+                <span className="text-gray-300">0000000000</span>
+              </li>
             </ul>
           </div>
+
+          
 
           {/* Social Media Links */}
           {/* <div>

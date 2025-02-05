@@ -13,7 +13,7 @@ export default function Home() {
             <div className="relative flex justify-center">
               <div className="relative z-10">
                 <img
-                  src="/online-class.jpg"
+                  src="/advance_feature_img.png"
                   alt="App Preview"
                   className="rounded-3xl shadow-2xl max-w-full"
                 />
@@ -29,13 +29,7 @@ export default function Home() {
                 Our Mission!
               </h1>
               <p className="text-base lg:text-lg text-slate-600 leading-relaxed">
-                At DigiSir, we are transforming the educational experience with
-                cutting-edge technology that streamlines institute operations. Our
-                platform facilitates seamless communication between teachers,
-                students, and parents while simplifying tasks like attendance,
-                assignments, and schedules. We empower schools to be more
-                efficient, allowing educators to focus on what truly
-                matters—student success.
+              To empower educational institutions, educators, and learners by providing comprehensive, innovative, and user-friendly EduTech solutions that simplify administrative tasks, enhance teaching and learning experiences, and foster academic excellence.
               </p>
             </div>
           </div>
@@ -91,9 +85,7 @@ export default function Home() {
       <section className="mt-12 text-center">
         <h2 className="text-3xl font-semibold mb-4 text-[#002B5B]">Join Us in Shaping the Future of Education</h2>
         <p className="text-lg text-muted-foreground mb-6 text-[#004a9f]">
-          Whether you're an educational institution looking to modernize your processes, a teacher seeking innovative
-          tools, or a student eager to enhance your learning journey, Digisir's Solutions is here to support you every
-          step of the way.
+        To establish Hello Digi Sir as the leading EduTech platform, connecting millions of educators, learners, and institutions worldwide, and becoming the trusted destination for quality education, skill development, and innovation in learning.
         </p>
         <button className="bg-primary  px-6 py-3 rounded-lg text-lg font-semibold hover:bg-primary/90 transition-colors text-[#002B5B]">
           Learn More About Our Solutions
