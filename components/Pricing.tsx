@@ -13,7 +13,7 @@ const plans = [
   {
     name: "1 Year Plan",
     price: 22500,
-    duration: "per 2 years",
+    duration: "per year",
     description: "Great value for growing educators",
     features: [
       "All features of 1st Plan",
@@ -27,7 +27,7 @@ const plans = [
   {
     name: "1 Year Plan",
     price: 25000,
-    duration: "per 5 years",
+    duration: "per year",
     description: "Best value for established institutions",
     features: [
       "All features of 2nd  Plan",

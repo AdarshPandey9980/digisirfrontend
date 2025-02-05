@@ -10,6 +10,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { TestimonialSection } from "./TestmorialSection";
 import { redirect, useNavigate } from "react-router-dom";
+import ComparisonPage from "./Comparision";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -88,7 +89,7 @@ export default function Home() {
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 bg-blue-950 px-4 py-2 rounded-full text-emerald-50">
                 <span className="animate-bounce">🚀</span>
-                <span>ENHANCE YOUR LEARNING EXPERIENCE</span>
+                <span>NOW MANAGE YOUR INSTITUTION HASSLE FREE WITH DIGISIR</span>
               </div>
 
               <h1 className="text-5xl font-bold text-white leading-tight">
@@ -96,8 +97,7 @@ export default function Home() {
               </h1>
 
               <p className="text-emerald-50 text-lg">
-                Discover a world of knowledge with our cutting-edge online app.
-                Empower yourself to succeed in your career, passions, and personal growth journey.
+              Experience the World of EduTech and Explore the Digi Sir Within You with the Help of Hello Digi Sir.
               </p>
 
               <div className="flex items-center gap-4">
@@ -106,7 +106,7 @@ export default function Home() {
                   // onSubmit={handleJoinClass}
                   className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-lg hover:bg-slate-800 transition-colors"
                 >
-                  <span>Join a Class</span>
+                  <span>Book a Demo</span>
                 </button>
                 <button
                   // onClick={handleCreateClass} // Redirect to pricing section
@@ -119,7 +119,7 @@ export default function Home() {
 
             <div className="relative">
               <img
-                src="/t.jpg"
+                src="/image.webp"
                 alt="App Preview"
                 width={600}
                 height={800}
@@ -162,6 +162,7 @@ export default function Home() {
 
       <About />
       <Features />
+      <ComparisonPage/>
       <Pricing name={name} email={email} />
       <TestimonialSection/>
       <Contact />

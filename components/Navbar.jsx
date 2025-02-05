@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../public/logo.png";
+import logo from "../public/logo.jpeg";
 import Cookies from "js-cookie"; // Import Cookies for managing cookies
 
 const Navbar = ({ name, email }) => {
@@ -86,40 +86,7 @@ const Navbar = ({ name, email }) => {
             )
           )}
         </div>
-
-        {/* Avatar Section */}
-        <div className="relative">
-          {name ? (
-            <div
-              onClick={toggleDropdown}
-              className="w-10 h-10 flex items-center justify-center bg-[#002B5B] text-white rounded-full cursor-pointer select-none relative"
-            >
-              {name.charAt(0).toUpperCase()}
-            </div>
-          ) : (
-            <button className="bg-[#002B5B] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-              <a href="/sign-in">Log In</a>
-            </button>
-          )}
-
-          {/* Dropdown Menu */}
-          {isDropdownOpen && name && email && (
-            <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg py-2 w-48">
-              <div className="px-4 py-2 text-sm text-gray-700 border-b">
-                <p className="font-semibold">{name}</p>
-                <p className="text-xs text-gray-500">{email}</p>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100"
-              >
-                Log Out
-              </button>
-            </div>
-          )}
-        </div>
       </nav>
-
       {/* Mobile Navbar */}
       <nav className="sm:hidden fixed top-0 left-0 right-0 bg-white shadow-lg text-black z-50">
         <div className="flex items-center justify-between px-4 py-3">
