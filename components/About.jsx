@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       <section className="mt-12 text-center">
-        <h2 className="text-3xl font-semibold mb-4 text-[#002B5B]">Join Us in Shaping the Future of Education</h2>
+        <h2 className="text-4xl lg:text-6xl font-semibold mb-4 text-[#002B5B]">Our Vision</h2>
         <p className="text-lg text-muted-foreground mb-6 text-[#004a9f]">
         To establish Hello Digi Sir as the leading EduTech platform, connecting millions of educators, learners, and institutions worldwide, and becoming the trusted destination for quality education, skill development, and innovation in learning.
         </p>
