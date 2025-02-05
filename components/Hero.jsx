@@ -119,7 +119,7 @@ export default function Home() {
 
             <div className="relative">
               <img
-                src="/t.jpg"
+                src="/image.webp"
                 alt="App Preview"
                 width={600}
                 height={800}

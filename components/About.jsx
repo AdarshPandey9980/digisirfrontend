@@ -13,7 +13,7 @@ export default function Home() {
             <div className="relative flex justify-center">
               <div className="relative z-10">
                 <img
-                  src="/advance_feature_img.png"
+                  src="/banner.png"
                   alt="App Preview"
                   className="rounded-3xl shadow-2xl max-w-full"
                 />
